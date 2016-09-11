@@ -77,3 +77,20 @@ points(sqrt(val_error), col = 2, type = 'b')
 points(sqrt(cv_error), col = 3, type = 'b')
 legend('topleft', inset = c(0.05, 0), lty = 1, bty = 'n',
        legend = c('Training', 'Validation', '10-fold CV'), col = 1:3)
+
+# Regularization
+library(glmnet)
+x <- model.matrix(Salary ~ . + 0, data = Hitters)
+y <- Hitters$Salary
+## Ridge
+fit_ridge <- glmnet(x, y, alpha = 0)
+plot(fit_ridge, xvar = 'lambda', label = TRUE)
+cv_ridge <- cv.glmnet(x, y, alpha = 0)
+plot(cv_ridge)
+## Lasso
+fit_lasso <- glmnet(x, y)
+plot(fit_lasso, xvar = 'lambda', label = TRUE)
+plot(fit_lasso, xvar = 'dev', label = TRUE)
+cv_lasso <- cv.glmnet(x, y)
+plot(cv_lasso)
+coef(cv_lasso)
