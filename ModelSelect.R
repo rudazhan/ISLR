@@ -85,6 +85,7 @@ y <- Hitters$Salary
 ## Ridge
 fit_ridge <- glmnet(x, y, alpha = 0)
 plot(fit_ridge, xvar = 'lambda', label = TRUE)
+plot(fit_ridge, xvar = 'dev', label = TRUE)
 cv_ridge <- cv.glmnet(x, y, alpha = 0)
 plot(cv_ridge)
 ## Lasso
